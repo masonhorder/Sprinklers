@@ -1,13 +1,14 @@
+import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
 
 const textInputDecoration = InputDecoration(
   fillColor: Colors.white,
   filled: true,
-  contentPadding: EdgeInsets.all(12.0),
+  contentPadding: EdgeInsets.all(15.0),
   enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.white, width: 2.0),
+    borderSide: BorderSide(color: Colors.white, width: 2.3),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.pink, width: 2.0),
+    borderSide: BorderSide(color: sprinklerBlue, width: 2.3),
   ),
 );

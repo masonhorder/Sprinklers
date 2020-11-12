@@ -34,9 +34,9 @@ class _MyAppState extends State<MyApp> {
     
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.white, // this one for android
-        statusBarBrightness: Brightness.light// this one for iOS
-      ));
+      statusBarColor: Colors.white, // this one for android
+      statusBarBrightness: Brightness.light// this one for iOS
+    ));
     // return MaterialApp(
     //   debugShowCheckedModeBanner: false,
     //   title: 'Dice Coding Log',
@@ -73,9 +73,17 @@ class _MyAppState extends State<MyApp> {
     // );
     return StreamProvider<UserID>.value(
       value: AuthService().user,
-      child: MaterialApp(
-        home: Wrapper(),
-      ),
+      child: Theme(
+        data: ThemeData(
+          primaryColor: sprinklerBlue,
+          accentColor: sprinklerBlue,
+          hintColor: sprinklerBlue
+        ),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: Wrapper(),
+        ),
+      )
     );
   }
 }

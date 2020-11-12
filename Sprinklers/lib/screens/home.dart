@@ -34,6 +34,7 @@ class _FeedState extends State<HomePage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
+            SizedBox(height: 20.0),
             Expanded(
               child: pageTitle("Sprinklers", true),
             ),

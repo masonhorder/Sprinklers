@@ -1,8 +1,13 @@
 import 'package:Sprinklers/services/auth.dart';
 import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
+import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:Sprinklers/elements/pageTitle.dart';
+import 'package:flutter/services.dart';
+
+
 
 
 class Register extends StatefulWidget {
@@ -27,20 +32,14 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.white, // this one for android
+      statusBarBrightness: Brightness.light// this one for iOS
+    ));
     return loading ? Loading() : Scaffold(
-      backgroundColor: Colors.brown[100],
-      appBar: AppBar(
-        backgroundColor: Colors.brown[400],
-        elevation: 0.0,
-        title: Text('Sign up to Brew Crew'),
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.person),
-            label: Text('Sign In'),
-            onPressed: () => widget.toggleView(),
-          ),
-        ],
-      ),
+    
+  
+      backgroundColor: backgroundColor,
       body: Container(
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
         child: Form(
@@ -48,6 +47,10 @@ class _RegisterState extends State<Register> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
+              pageTitle("Sign Up", false, ),
+              SizedBox(height: 20.0),
+              Image(image: AssetImage('images/sprinklerImage.png'), width: 90,),
+              SizedBox(height: 35.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'email'),
                 validator: (val) => val.isEmpty ? 'Enter an email' : null,
@@ -64,12 +67,13 @@ class _RegisterState extends State<Register> {
                   setState(() => password = val);
                 },
               ),
-              SizedBox(height: 20.0),
+              SizedBox(height: 30.0),
               RaisedButton(
-                color: Colors.pink[400],
+                padding: EdgeInsets.all(7),
+                color: sprinklerBlue,
                 child: Text(
                   'Register',
-                  style: TextStyle(color: Colors.white),
+                  style: basicWhite,
                 ),
                 onPressed: () async {
                   if(_formKey.currentState.validate()){
@@ -83,6 +87,18 @@ class _RegisterState extends State<Register> {
                     }
                   }
                 }
+              ),
+              SizedBox(height: 27.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Have an account, ", style: basicBlack,),
+                  InkWell(
+                    child: Text("Sign In", style: basicBlue,),
+                    onTap: () => widget.toggleView(),
+                  ),
+                  Text("!", style: basicBlack,)
+                ],
               ),
               SizedBox(height: 12.0),
               Text(
