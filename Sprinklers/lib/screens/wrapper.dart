@@ -9,7 +9,6 @@ class Wrapper extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
     final user = Provider.of<UserID>(context);
     
     // return either the Home or Authenticate widget

@@ -12,13 +12,11 @@ class AuthService {
 
   // create user obj based on firebase user
   UserID _userFromFirebaseUser(User user) {
-    Firebase.initializeApp();
     return user != null ? UserID(uid: user.uid) : null;
   }
 
   // auth change user stream
   Stream<UserID> get user {
-    Firebase.initializeApp();
     return _auth.authStateChanges()
       //.map((FirebaseUser user) => _userFromFirebaseUser(user));
       .map(_userFromFirebaseUser);
@@ -26,7 +24,6 @@ class AuthService {
 
   // sign in anon
   Future signInAnon() async {
-    Firebase.initializeApp();
     try {
       User user = (await _auth.signInAnonymously()).user;
       return _userFromFirebaseUser(user);
@@ -38,7 +35,6 @@ class AuthService {
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
-    Firebase.initializeApp();
     try {
       User user = (await _auth.signInWithEmailAndPassword(email: email, password: password)).user;
       return user;
@@ -50,7 +46,6 @@ class AuthService {
 
   // register with email and password
   Future registerWithEmailAndPassword(String email, String password) async {
-    Firebase.initializeApp();
     try {
       User user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
       // create a new document for the user with the uid
@@ -64,7 +59,6 @@ class AuthService {
 
   // sign out
   Future signOut() async {
-    Firebase.initializeApp();
     try {
       return await _auth.signOut();
     } catch (error) {

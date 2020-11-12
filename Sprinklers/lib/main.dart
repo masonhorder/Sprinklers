@@ -15,7 +15,12 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:Coding/functions/functions.dart';
 
 
-void main() => runApp(MyApp());
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
+
 
 class MyApp extends StatefulWidget {
   @override
@@ -26,7 +31,6 @@ class _MyAppState extends State<MyApp> {
   
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
     
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(

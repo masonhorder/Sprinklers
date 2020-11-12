@@ -2,8 +2,11 @@
 import 'package:Sprinklers/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
+
+  
 
   final String uid;
   DatabaseService({ this.uid });
@@ -12,7 +15,6 @@ class DatabaseService {
   final CollectionReference brewCollection = FirebaseFirestore.instance.collection('brews');
 
   Future<void> updateUserData(String sugars, String name, int strength) async {
-    await Firebase.initializeApp();
     return await brewCollection.doc(uid).set({
       'sugars': sugars,
       'name': name,
@@ -34,7 +36,6 @@ class DatabaseService {
 
   // user data from snapshots
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    Firebase.initializeApp();
     return UserData(
       uid: uid,
       name: snapshot.data()['name'],
@@ -51,7 +52,6 @@ class DatabaseService {
 
   // get user doc stream
   Stream<UserData> get userData {
-    Firebase.initializeApp();
     return brewCollection.doc(uid).snapshots()
       .map(_userDataFromSnapshot);
   }

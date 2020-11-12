@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 // import 'package:Coding/functions/functions.dart';
@@ -23,10 +24,10 @@ class HomePage extends StatefulWidget {
 
 class _FeedState extends State<HomePage> {
   
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    Firebase.initializeApp();
 
     return Scaffold(
       body: Container(
@@ -35,7 +36,14 @@ class _FeedState extends State<HomePage> {
           children: [
             Expanded(
               child: pageTitle("Sprinklers", true),
-            )
+            ),
+            FlatButton.icon(
+              icon: Icon(Icons.person),
+              label: Text('logout'),
+              onPressed: () async {
+                await _auth.signOut();
+              },
+            ),
           ],
         )
       ),
