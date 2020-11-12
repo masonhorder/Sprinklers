@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                pageTitle("Sign In", false, ),
+                pageTitle(context, "Sign In", false, false),
                 SizedBox(height: 20.0),
                 Image(image: AssetImage('images/sprinklerImage.png'), width: 90,),
                 SizedBox(height: 35.0),
@@ -68,16 +68,8 @@ class _SignInState extends State<SignIn> {
                 SizedBox(height: 20.0),
                 TextFormField(
                   decoration: textInputDecoration.copyWith(hintText: 'password', ),
-                  // decoration: new InputDecoration(
-                  //   labelText: "Email",
-                  //   suffixIcon: Icon(Icons.email),
-                  //   labelStyle: TextStyle(color: sprinklerBlue),
-                  //   enabledBorder: new UnderlineInputBorder(
-                  //     borderSide: new BorderSide(color: sprinklerBlue)
-                  //   )
-                  // ),
                   obscureText: true,
-                  validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                  validator: (val) => val.length < 6 ? 'Enter a valid password' : null,
                   onChanged: (val) {
                     setState(() => password = val);
                   },

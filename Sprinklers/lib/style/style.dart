@@ -10,6 +10,11 @@ Color backgroundColor = new Color(0xFFf0f0f0);
 Color whiteFontColor = new Color(0xFFfafafa);
 Color darkFontColor = new Color(0xFF424242);
 const Color sprinklerBlue = const Color(0xFF119db9);
+Color lightGrey = Color(0xFFdedede);
+Color darkGrey = Color(0xFF696969);
+Color red = Color(0xFFde2821);
+
+
 
 
 
@@ -38,4 +43,5 @@ TextStyle basicWhite = new TextStyle(fontFamily: defaultFont, fontSize: 19, colo
 TextStyle basicSmallWhite = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: whiteFontColor, fontWeight: FontWeight.w400);
 TextStyle basicSmallBlack = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: darkFontColor, fontWeight: FontWeight.w400);
 TextStyle basicBlue = TextStyle(fontFamily: defaultFont, fontSize: 17, color: sprinklerBlue, fontWeight: FontWeight.w400);
+TextStyle basicRed = TextStyle(fontFamily: defaultFont, fontSize: 17, color: red, fontWeight: FontWeight.w400);
 

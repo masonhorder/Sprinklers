@@ -34,17 +34,17 @@ class _FeedState extends State<HomePage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            SizedBox(height: 20.0),
-            Expanded(
-              child: pageTitle("Sprinklers", true),
+            SizedBox(height: 40.0),
+            Container(
+              child: pageTitle(context, "Sprinklers", true, false),
             ),
-            FlatButton.icon(
-              icon: Icon(Icons.person),
-              label: Text('logout'),
-              onPressed: () async {
-                await _auth.signOut();
-              },
-            ),
+            // FlatButton.icon(
+            //   icon: Icon(Icons.person),
+            //   label: Text('logout'),
+            //   onPressed: () async {
+            //     await _auth.signOut();
+            //   },
+            // ),
           ],
         )
       ),
