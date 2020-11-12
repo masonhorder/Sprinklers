@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>454589562644-elv25n7qqi95417g6s5gf7jfvn9c7bb2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.454589562644-elv25n7qqi95417g6s5gf7jfvn9c7bb2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBxzuxO1g_ygqTUwHMkMCHqgpRJCoMFBdE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>454589562644</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.masonhorder.Sprinklers</string>
+	<key>PROJECT_ID</key>
+	<string>sprinkler-70b61</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sprinkler-70b61.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:454589562644:ios:b9b23955e2086c9e020c01</string>
+	<key>DATABASE_URL</key>
+	<string>https://sprinkler-70b61.firebaseio.com</string>
+</dict>
+</plist>
