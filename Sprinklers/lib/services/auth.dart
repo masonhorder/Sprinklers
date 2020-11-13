@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 
-
 class AuthService {
   
 
@@ -22,16 +21,6 @@ class AuthService {
       .map(_userFromFirebaseUser);
   }
 
-  // sign in anon
-  Future signInAnon() async {
-    try {
-      User user = (await _auth.signInAnonymously()).user;
-      return _userFromFirebaseUser(user);
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
 
   // sign in with email and password
   Future signInWithEmailAndPassword(String email, String password) async {
@@ -49,7 +38,7 @@ class AuthService {
     try {
       User user = (await _auth.createUserWithEmailAndPassword(email: email, password: password)).user;
       // create a new document for the user with the uid
-      await DatabaseService(uid: user.uid).updateUserData('0','new crew member', 100);
+      await DatabaseService(uid: user.uid).updateUserData('Mason','Horder');
       return _userFromFirebaseUser(user);
     } catch (error) {
       print(error.toString());

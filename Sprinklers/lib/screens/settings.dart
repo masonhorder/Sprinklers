@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:Sprinklers/style/style.dart';
+import 'package:Sprinklers/elements/signOutPopUp.dart';
+import 'package:Sprinklers/screens/settings/account.dart';
+
 
 
 
@@ -76,10 +79,7 @@ class SettingsState extends State<SettingsPage> {
                               Text("Devices", style: basicBlack,),
                               Container(
                                 width:50,
-                                child: IconButton(
-                                  icon: Icon(Icons.keyboard_arrow_right), 
-                                  onPressed: null
-                                ),
+                                child: Icon(Icons.keyboard_arrow_right), 
                               )
                             ]
                           )
@@ -129,10 +129,12 @@ class SettingsState extends State<SettingsPage> {
 
                       // account info
                       InkWell(
-                        // onTap: () async{
-                        //   await _auth.signOut();
-                        //   Navigator.pop(context);
-                        // },
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AccountInfoSettings()),
+                          );
+                        },
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
@@ -151,10 +153,7 @@ class SettingsState extends State<SettingsPage> {
                               Text("Account Info", style: basicBlack,),
                               Container(
                                 width:50,
-                                child: IconButton(
-                                  icon: Icon(Icons.keyboard_arrow_right), 
-                                  onPressed: null
-                                ),
+                                child: Icon(Icons.keyboard_arrow_right), 
                               )
                             ]
                           )
@@ -166,8 +165,9 @@ class SettingsState extends State<SettingsPage> {
                       // logout
                       InkWell(
                         onTap: () async{
-                          await _auth.signOut();
-                          Navigator.pop(context);
+                          // await _auth.signOut();
+                          // Navigator.pop(context);
+                          runNowPopUp(context);
                         },
                         child: Container(
                           height: 40,

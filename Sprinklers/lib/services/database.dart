@@ -1,24 +1,28 @@
-// import 'package:Sprinklers/models/brew.dart';
 import 'package:Sprinklers/models/user.dart';
+import 'package:Sprinklers/models/schedules.dart';
+import 'package:Sprinklers/notifier/schedulesNotifier.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:after_init/after_init.dart';
+
 
 class DatabaseService {
 
-  
+
 
   final String uid;
   DatabaseService({ this.uid });
+  // print(uid);
 
   // collection reference
-  final CollectionReference brewCollection = FirebaseFirestore.instance.collection('brews');
+  final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
 
-  Future<void> updateUserData(String sugars, String name, int strength) async {
-    return await brewCollection.doc(uid).set({
-      'sugars': sugars,
-      'name': name,
-      'strength': strength,
+  Future<void> updateUserData(String firstName, String lastName) async {
+    return await userCollection.doc(uid).set({
+      'firstName': firstName,
+      'lastName': lastName,
     });
   }
 
@@ -38,9 +42,8 @@ class DatabaseService {
   UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
     return UserData(
       uid: uid,
-      name: snapshot.data()['name'],
-      sugars: snapshot.data()['sugars'],
-      strength: snapshot.data()['strength']
+      firstName: snapshot.data()['firstName'],
+      lastName: snapshot.data()['lastName'],
     );
   }
 
@@ -52,8 +55,47 @@ class DatabaseService {
 
   // get user doc stream
   Stream<UserData> get userData {
-    return brewCollection.doc(uid).snapshots()
+    // print(uid);
+    return userCollection.doc(uid).snapshots()
       .map(_userDataFromSnapshot);
   }
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+getSchedules(SchedulesNotifier schedulesNotifier, BuildContext context) async {
+  UserID user = Provider.of<UserID>(context);
+  String userId = user.uid;
+  print(userId);
+  print("data");
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('schedules')
+      // .where("userId", isEqualTo: "")
+      .get();
+
+  List<Schedules> _schedulesList = [];
+
+  snapshot.docs.forEach((document) {
+    Schedules schedule = Schedules.fromMap(document.data());
+    _schedulesList.add(schedule);
+  });
+
+  schedulesNotifier.scheduleList = _schedulesList;
 }

@@ -1,24 +1,28 @@
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:Sprinklers/screens/home.dart';
 import 'package:flutter/services.dart';
 import 'package:Sprinklers/screens/wrapper.dart';
 import 'package:Sprinklers/services/auth.dart';
 import 'package:provider/provider.dart';
 import 'package:Sprinklers/models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:Sprinklers/notifier/schedulesNotifier.dart';
 
 
-// import 'package:provider/provider.dart';
-// import 'package:Coding/screens/data.dart';
-// import 'package:Coding/screens/feed.dart';
-// import 'package:Coding/functions/functions.dart';
 
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [
+
+      ChangeNotifierProvider(
+        create: (context) => SchedulesNotifier(),
+      ),
+    ],
+    child: MyApp(),
+  ));
 }
 
 

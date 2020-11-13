@@ -9,10 +9,10 @@ class UserID {
 class UserData {
 
   final String uid;
-  final String name;
-  final String sugars;
-  final int strength;
+  final String firstName;
+  final String lastName;
+  // final int strength;
 
-  UserData({ this.uid, this.sugars, this.strength, this.name });
+  UserData({ this.uid, this.firstName, this.lastName});
 
 }

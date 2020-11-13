@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:Sprinklers/screens/settings.dart';
+import 'package:Sprinklers/elements/runNowPopUp.dart';
+
 
 pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back){
   if(homePage == true){
@@ -10,7 +12,9 @@ pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back
         IconButton(
           icon: Icon(Icons.play_circle_filled, color: darkGrey,),
           iconSize: 36,
-
+          onPressed: (){
+            runNowPopUp(context);
+          },
         ),
         SizedBox(width: 10,),
         Container(
