@@ -87,7 +87,7 @@ getSchedules(SchedulesNotifier schedulesNotifier, BuildContext context) async {
   print("data");
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('schedules')
-      // .where("userId", isEqualTo: "")
+      .where("userId", isEqualTo: "")
       .get();
 
   List<Schedules> _schedulesList = [];
