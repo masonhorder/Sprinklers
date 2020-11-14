@@ -28,6 +28,7 @@ scheduleTitle(String title){
 
 
 startTime(int startTime){
+  String hourStrStart;
   int hour;
   int minute;
   String hourStr;
@@ -36,9 +37,12 @@ startTime(int startTime){
   if(startTime >= 86400){
     return "error";
   }
-  hour = (((startTime/60)-30)/60).round();
+  
+  hourStrStart = (((startTime/60))/60).toString();
+  String hourStrTime = hourStrStart.substring(0, hourStrStart.indexOf('.'));
+  hour = int.parse(hourStrTime);
   minute = (startTime/60).round()-(hour*60);
-  print(hour.toString()+" " + minute.toString());
+  print((((startTime/60))/60));
   if(hour == 0){
     hourStr = "12";
     identifier = "AM";
