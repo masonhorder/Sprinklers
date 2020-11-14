@@ -11,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:Sprinklers/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Sprinklers/models/schedules.dart';
+import 'package:Sprinklers/functions/functions.dart';
 
 
 
@@ -121,7 +122,7 @@ class _FeedState extends State<HomePage>{
                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children:[
                                             Container(
-                                              child: Text(schedulesList[index]["name"], style: basicBlack,),
+                                              child: Text(scheduleTitle(schedulesList[index]["name"]), style: basicBlack,),
                                             ),
                                           
                                             Material(
@@ -151,7 +152,7 @@ class _FeedState extends State<HomePage>{
                                         Container(
                                           child: Row(
                                             children:[
-                                              Text("Start Time: " + schedulesList[index]["startTime"].toString(), style: basicSmallBlack)
+                                              Text("Start Time: " + startTime(schedulesList[index]["startTime"]), style: basicSmallBlack)
                                             ]
                                           )
                                         ),
