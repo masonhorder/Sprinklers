@@ -30,6 +30,7 @@ dependencies:
   provider:
   flutter_spinkit:
   after_init:
+  date_format: 
 
 
   # The following adds the Cupertino Icons font to your application.

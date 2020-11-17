@@ -6,6 +6,7 @@ import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:Sprinklers/elements/signOutPopUp.dart';
 import 'package:Sprinklers/screens/settings/account.dart';
+import 'package:Sprinklers/screens/settings/devices.dart';
 
 
 
@@ -51,16 +52,18 @@ class SettingsState extends State<SettingsPage> {
                 children: [
 
                   // device stuff
-                  Column(
-                    children: [
+                  // Column(
+                  //   children: [
 
 
                       // devices
                       InkWell(
-                        // onTap: () async{
-                        //   await _auth.signOut();
-                        //   Navigator.pop(context);
-                        // },
+                        onTap: () async{
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => DevicesSettings()),
+                          );
+                        },
                         child: Container(
                           height: 40,
                           decoration: BoxDecoration(
@@ -115,17 +118,17 @@ class SettingsState extends State<SettingsPage> {
                       ),
 
 
-                    ],
-                  ),
+                  //   ],
+                  // ),
 
-                  SizedBox(height:80),
+                  SizedBox(height:1),
 
 
 
 
                   // acoount
-                  Column(
-                    children: [
+                  // Column(
+                  //   children: [
 
                       // account info
                       InkWell(
@@ -160,7 +163,7 @@ class SettingsState extends State<SettingsPage> {
                         )
                       ),
 
-                      SizedBox(height:10),
+                      SizedBox(height:100),
 
                       // logout
                       InkWell(
@@ -185,8 +188,8 @@ class SettingsState extends State<SettingsPage> {
                           )
                         )
                       ),
-                    ],
-                  )
+                  //   ],
+                  // )
 
 
                 ],

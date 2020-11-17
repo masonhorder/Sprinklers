@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:date_format/date_format.dart';
 
 
 
@@ -63,4 +64,108 @@ startTime(int startTime){
   }
 
   return hourStr + ":" + minuteStr + " "+ identifier;
+}
+
+
+
+occurenceType(int occurence){
+  String returnString;
+  switch(occurence) { 
+    case 1: { 
+      returnString = "Everyday";
+    } 
+    break; 
+  
+    case 2: { 
+      returnString = "Even Days";
+    } 
+    break; 
+
+    case 3: { 
+      returnString = "Odd Days";
+    } 
+    break; 
+      
+      
+  //  default: { 
+  //     //statements;  
+  //  }
+  //  break; 
+  } 
+  if(returnString == null){
+    returnString = "error";
+  }
+  return returnString;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+convertStringToDate(int strDate){
+  DateTime date = DateTime.fromMillisecondsSinceEpoch(strDate*1000);
+  return date;
+}
+
+runHistoryTitle(int runType, int startTime, int duration){
+  List runHistoryTitleList = [];
+  
+  double dblMinutes = duration/1000/60;
+  int minutes = dblMinutes.round();
+  DateTime date = convertStringToDate(startTime);
+  String timeIdentifier;
+  int timeInt = minutes;
+
+
+  // name of either zone or schedule
+  if(runType == 0){
+    runHistoryTitleList.add("Zone 1:");
+  }
+  else{
+    runHistoryTitleList.add("Schedule 1:");
+  }
+
+  
+  runHistoryTitleList.add(formatDate(date, [hh, ':', nn, ' ', am, ', ', M, ' ', dd]));
+
+
+  if(runType == 0){
+    if(minutes > 57){
+      double dblHours = minutes/60;
+      int hours = dblHours.round();
+      timeInt = hours;
+      if(hours != 1){
+        timeIdentifier = "Hours";
+      } else{
+        timeIdentifier = "Hour";
+      }
+    }else{
+      if(minutes != 1){
+        timeIdentifier = "Minutes";
+      } else{
+        timeIdentifier = "Minute";
+      }
+    }
+    runHistoryTitleList.add(timeInt.toString() +  " " +  timeIdentifier);
+  }
+
+  
+  
+
+
+
+
+
+  return runHistoryTitleList.join(" ");
+
 }

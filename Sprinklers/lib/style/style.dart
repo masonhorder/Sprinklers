@@ -36,7 +36,6 @@ TextStyle chartTitle = new TextStyle(fontFamily: defaultFont, fontSize: 19, colo
 
 
 
-// page titles
 TextStyle pageTitleStyle = new TextStyle(fontFamily: defaultFont, fontSize: 50, color: sprinklerBlue, fontWeight: FontWeight.w800);
 TextStyle basicBlack = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w400);
 TextStyle basicWhite = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: whiteFontColor, fontWeight: FontWeight.w400);
@@ -44,4 +43,5 @@ TextStyle basicSmallWhite = new TextStyle(fontFamily: defaultFont, fontSize: 15,
 TextStyle basicSmallBlack = new TextStyle(fontFamily: defaultFont, fontSize: 15, color: darkFontColor, fontWeight: FontWeight.w400);
 TextStyle basicBlue = TextStyle(fontFamily: defaultFont, fontSize: 19, color: sprinklerBlue, fontWeight: FontWeight.w400);
 TextStyle basicRed = TextStyle(fontFamily: defaultFont, fontSize: 19, color: red, fontWeight: FontWeight.w400);
-
+TextStyle basicLargeBlack = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: darkFontColor, fontWeight: FontWeight.w700);
+TextStyle basicBlackBold = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w700);

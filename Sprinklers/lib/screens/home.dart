@@ -62,7 +62,7 @@ class _FeedState extends State<HomePage>{
                 // color: Colors.blue,
                 // height: 200,
                 width: MediaQuery.of(context).size.width,
-                child: SingleChildScrollView(
+                // child: SingleChildScrollView(
                   child: Column(
                   
                     // crossAxisAlignment: CrossAxisAlignment.center,
@@ -160,7 +160,7 @@ class _FeedState extends State<HomePage>{
                                         Container(
                                           child: Row(
                                             children:[
-                                              Text("Occurence: " + schedulesList[index]["occurenceType"].toString(), style: basicSmallBlack)
+                                              Text("Occurence: " + occurenceType(schedulesList[index]["occurenceType"]), style: basicSmallBlack)
                                             ]
                                           )
                                         )
@@ -179,7 +179,7 @@ class _FeedState extends State<HomePage>{
                                       ],
                                     ),
                                   ),
-                                  SizedBox(width:26)
+                                  SizedBox(width:20)
                                 ]
 
                                   
@@ -189,9 +189,82 @@ class _FeedState extends State<HomePage>{
   
                         }
                       ),
+
+                      SizedBox(
+                        height: 30,
+                      ),
+
+                      Container(
+                        
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          child: Column(
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text('Run History', style: basicLargeBlack),
+                              ),
+
+                              StreamBuilder(
+                                stream: FirebaseFirestore.instance.collection('runHistory').where("userId", isEqualTo: userData.uid).snapshots(),
+                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                                  if(!snapshot.hasData){
+                                    return Loading();
+                                  }
+                                  List schedulesList = snapshot.data.docs.toList();
+                                  return Container(
+                                    height: 340,
+                                    
+                                    margin: EdgeInsets.only(left:15, right: 15),
+
+                                          
+                                  child: ListView.builder(
+                                    // scrollDirection: Axis.horizontal,
+                                    itemCount: schedulesList.length,
+                                    itemBuilder: (context, index){
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            height: 1,
+                                            color: lightGrey,
+                                          ),
+                                          Container(
+                                            padding: EdgeInsets.all(5),
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(runHistoryTitle(schedulesList[index]["runType"], schedulesList[index]["startTime"], schedulesList[index]["duration"]),style: basicBlackBold,),
+                                          ),
+                                        ]
+                                      );
+                                    })
+                                  );
+          
+                                }
+                              ),
+
+                              
+                              
+                            ]
+                          )
+                        ),
+                        height: 400,
+                        margin: EdgeInsets.only(left: 15, right:15),
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                              offset: Offset(0, 3), // changes position of shadow
+                            ),
+                          ],
+                        ),
+                      )
                     ]
                   )
-                ),
+                // ),
               )
             )
           );
