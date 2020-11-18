@@ -3,16 +3,16 @@ import 'package:date_format/date_format.dart';
 
 
 
-scheduleTitle(String title){
+limitString(String title, int length){
   List charList;
   String returnTitle;
   int stringLength = title.length;
-  if(stringLength >=12){
+  if(stringLength >=length){
     returnTitle = title;
-    while (returnTitle.length >= 13) {
+    while (returnTitle.length >= length+1) {
       returnTitle = returnTitle.substring(0, returnTitle.length - 1);
     }
-    if(returnTitle[11] == " "){
+    if(returnTitle[length-1] == " "){
       returnTitle = returnTitle.substring(0, returnTitle.length - 1);
     }
     returnTitle = returnTitle + "...";
