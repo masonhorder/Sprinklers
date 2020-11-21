@@ -12,6 +12,8 @@ import 'package:Sprinklers/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Sprinklers/models/schedules.dart';
 import 'package:Sprinklers/functions/functions.dart';
+import 'package:Sprinklers/screens/scheduleForm.dart';
+
 
 
 
@@ -115,7 +117,12 @@ class _FeedState extends State<HomePage>{
                                                     icon: Icon(Icons.add),
                                                     iconSize: 50,
                                                     color: Colors.white,
-                                                    onPressed: (){},
+                                                    onPressed: () async{
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(builder: (context) => ScheduleForm()),
+                                                      );
+                                                    },
                                                   )
                                                   
                                                 )

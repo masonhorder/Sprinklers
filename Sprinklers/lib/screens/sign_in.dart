@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                pageTitle(context, "Sign In", false, false),
+                pageTitle(context, "New Schedule", false, true),
                 SizedBox(height: 20.0),
                 Image(image: AssetImage('images/sprinklerImage.png'), width: 90,),
                 SizedBox(height: 35.0),
@@ -119,4 +119,38 @@ class _SignInState extends State<SignIn> {
       ),
     );
   }
+  
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
