@@ -1,18 +1,13 @@
-import 'package:Sprinklers/notifier/schedulesNotifier.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Sprinklers/models/user.dart';
 import 'package:Sprinklers/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:Sprinklers/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Sprinklers/models/schedules.dart';
 import 'package:Sprinklers/functions/functions.dart';
-
+import 'package:Sprinklers/notifier/buildNotifier.dart';
 
 
 
@@ -25,12 +20,20 @@ class DevicesSettings extends StatefulWidget {
 
 class _DevicesSettingsState extends State<DevicesSettings> {
   
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
+  void initState(){
+    BuildNotifier buildNotifier = Provider.of<BuildNotifier>(context, listen: false);
+    getBuilds(buildNotifier,context);
+    super.initState();
+  }
+
+  
+  
+  @override
   Widget build(BuildContext context) {
+    BuildNotifier buildNotifier = Provider.of<BuildNotifier>(context);
     UserID user = Provider.of<UserID>(context);
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -88,7 +91,7 @@ class _DevicesSettingsState extends State<DevicesSettings> {
                                       )
                                     )
                                   ]
-                    );
+                                );
                               }
                               return Column(
                                 children: [
@@ -116,9 +119,9 @@ class _DevicesSettingsState extends State<DevicesSettings> {
                                               child: PopupMenuButton<String>(
                                                 
                                                 child: Icon(Icons.more_vert, size: 30,),
-                                                // onSelected: choiceAction,
+                                                onSelected: choiceAction,
                                                 itemBuilder: (BuildContext context){
-                                                  return ["Forget Device", "Edit Name", "Delete Data", "Pause Device"].map((String choice){
+                                                  return ["Forget Device", "Edit Device", "Delete Data", "Pause Device"].map((String choice){
                                                     return PopupMenuItem<String>(
                                                       value: choice,
                                                       child: Text(choice, style: basicBlack,),
@@ -143,7 +146,7 @@ class _DevicesSettingsState extends State<DevicesSettings> {
                                         Container(
                                           child: Row(
                                             children:[
-                                              Text("Number of Zones: 8", style: basicBlack)
+                                              Text("Number of Zones: " + getZoneCount(schedulesList[index]["buildId"], buildNotifier), style: basicBlack)
                                             ]
                                           )
                                         )
@@ -184,6 +187,17 @@ class _DevicesSettingsState extends State<DevicesSettings> {
         }
       }
     );      
+  }
+  choiceAction(String choice){
+    if(choice == "Edit Device"){
+      print("edit");
+    }
+    // else if(choice == "Subscribe"){
+    //   print('Subscribe');
+    // }
+    // else if(choice == "Sign Out"){
+    //   print('SignOut');
+    // }
   }
 }
 

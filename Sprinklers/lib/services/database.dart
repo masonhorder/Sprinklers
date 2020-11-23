@@ -1,12 +1,11 @@
 import 'package:Sprinklers/models/user.dart';
 import 'package:Sprinklers/models/schedules.dart';
 import 'package:Sprinklers/notifier/schedulesNotifier.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:after_init/after_init.dart';
-
+import 'package:Sprinklers/models/build.dart';
+import 'package:Sprinklers/notifier/buildNotifier.dart';
 
 class DatabaseService {
 
@@ -83,11 +82,9 @@ class DatabaseService {
 getSchedules(SchedulesNotifier schedulesNotifier, BuildContext context) async {
   UserID user = Provider.of<UserID>(context);
   String userId = user.uid;
-  print(userId);
-  print("data");
   QuerySnapshot snapshot = await FirebaseFirestore.instance
       .collection('schedules')
-      .where("userId", isEqualTo: "")
+      .where("userId", isEqualTo: userId)
       .get();
 
   List<Schedules> _schedulesList = [];
@@ -98,4 +95,22 @@ getSchedules(SchedulesNotifier schedulesNotifier, BuildContext context) async {
   });
 
   schedulesNotifier.scheduleList = _schedulesList;
+}
+
+
+
+
+getBuilds(BuildNotifier buildNotifier, BuildContext context) async {
+  QuerySnapshot snapshot = await FirebaseFirestore.instance
+      .collection('builds')
+      .get();
+
+  List<Builds> _buildList = [];
+
+  snapshot.docs.forEach((document) {
+    Builds build = Builds.fromMap(document.data());
+    _buildList.add(build);
+  });
+
+  buildNotifier.buildList = _buildList;
 }

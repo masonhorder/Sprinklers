@@ -1,7 +1,7 @@
-import 'package:Sprinklers/models/user.dart';
+// import 'package:Sprinklers/models/user.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:provider/provider.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:Sprinklers/elements/signOutPopUp.dart';
@@ -32,7 +32,7 @@ class SettingsPage extends StatefulWidget {
 
 class SettingsState extends State<SettingsPage> {
   
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {

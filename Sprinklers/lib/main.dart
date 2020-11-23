@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:Sprinklers/models/user.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:Sprinklers/notifier/schedulesNotifier.dart';
+import 'package:Sprinklers/notifier/buildNotifier.dart';
 
 
 
@@ -19,6 +20,9 @@ void main() async{
 
       ChangeNotifierProvider(
         create: (context) => SchedulesNotifier(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => BuildNotifier(),
       ),
     ],
     child: MyApp(),

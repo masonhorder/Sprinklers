@@ -3,7 +3,7 @@ import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:flutter/services.dart';
 
@@ -54,7 +54,7 @@ class _SignInState extends State<SignIn> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20.0),
-                pageTitle(context, "New Schedule", false, true),
+                pageTitle(context, "Sign In", false, false),
                 SizedBox(height: 20.0),
                 Image(image: AssetImage('images/sprinklerImage.png'), width: 90,),
                 SizedBox(height: 35.0),

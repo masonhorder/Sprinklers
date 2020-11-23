@@ -1,16 +1,16 @@
-import 'package:Sprinklers/notifier/schedulesNotifier.dart';
+// import 'package:Sprinklers/notifier/schedulesNotifier.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Sprinklers/models/user.dart';
 import 'package:Sprinklers/services/database.dart';
 import 'package:provider/provider.dart';
-import 'package:Sprinklers/services/auth.dart';
+// import 'package:Sprinklers/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Sprinklers/models/schedules.dart';
+// import 'package:Sprinklers/models/schedules.dart';
 import 'package:Sprinklers/functions/functions.dart';
 import 'package:Sprinklers/screens/scheduleForm.dart';
 
@@ -39,7 +39,7 @@ class _FeedState extends State<HomePage>{
   }
 
   
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
 
 
 

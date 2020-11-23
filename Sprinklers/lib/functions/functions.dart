@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-
+import 'package:Sprinklers/models/build.dart';
+import 'package:Sprinklers/notifier/buildNotifier.dart';
 
 
 limitString(String title, int length){
-  List charList;
   String returnTitle;
   int stringLength = title.length;
   if(stringLength >=length){
@@ -43,7 +43,7 @@ startTime(int startTime){
   String hourStrTime = hourStrStart.substring(0, hourStrStart.indexOf('.'));
   hour = int.parse(hourStrTime);
   minute = (startTime/60).round()-(hour*60);
-  print((((startTime/60))/60));
+  // print((((startTime/60))/60));
   if(hour == 0){
     hourStr = "12";
     identifier = "AM";
@@ -159,13 +159,20 @@ runHistoryTitle(int runType, int startTime, int duration){
     runHistoryTitleList.add(timeInt.toString() +  " " +  timeIdentifier);
   }
 
-  
-  
-
-
-
-
-
   return runHistoryTitleList.join(" ");
+}
 
+
+
+
+getZoneCount(int buildId, BuildNotifier buildNotifier){
+  int index = 0;
+  for(var item in buildNotifier.buildList){
+    // print(item.zones);
+    if(item.buildId == buildId){
+      return item.zones.toString();
+    }
+    index += 1;
+  }
+  return "error retreiving data";
 }

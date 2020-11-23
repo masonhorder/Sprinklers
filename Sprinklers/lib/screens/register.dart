@@ -3,7 +3,6 @@ import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:flutter/services.dart';
 
