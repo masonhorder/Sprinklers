@@ -1,14 +1,16 @@
-// import 'package:Sprinklers/services/auth.dart';
 import 'package:Sprinklers/shared/constants.dart';
-// import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 import 'package:flutter/services.dart';
-// import 'package:Sprinklers/elements/scheduleFormExtras.dart';
+import 'package:Sprinklers/elements/scheduleFormExtras.dart';
 import 'package:Sprinklers/models/scheduleForm.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:Sprinklers/functions/functions.dart';
+import 'package:Sprinklers/services/database.dart';
+import 'package:Sprinklers/models/devices.dart';
+import 'package:Sprinklers/notifier/deviceNotifier.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -28,16 +30,25 @@ class _ScheduleFormState extends State<ScheduleForm> {
   String error = '';
   bool loading = false;
 
-  // text field state
+
+  @override
+  void initState(){
+    DevicesNotifier devicesNotifier = Provider.of<DevicesNotifier>(context, listen: false);
+    getDevices(devicesNotifier,context);
+    super.initState();
+  }
 
 
 
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.white, // this one for android
       statusBarBrightness: Brightness.light// this one for iOS
     ));
+    DevicesNotifier devicesNotifier = Provider.of<DevicesNotifier>(context);
+    getDevices(devicesNotifier,context);
 
     return Scaffold(
     
@@ -66,7 +77,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
 
                     Container(
                       width: MediaQuery.of(context).size.width,
-                      child: pageTitle(context, "Schedule", false, true),
+                      child: pageTitle(context, "Schedule", false, true, setState),
                     ),
 
                     SizedBox(height: 20.0),
@@ -78,13 +89,14 @@ class _ScheduleFormState extends State<ScheduleForm> {
                           children:[
 
                             Container(
-                              padding: EdgeInsets.only(left:50, right: 50, bottom: 8),
+                              padding: EdgeInsets.only(left:30, right: 30, bottom: 8),
                               alignment: Alignment.centerLeft,
                               child: Text("Name:", style: TextStyle(fontSize:16)),
                             ),
                             Container(
-                              padding: EdgeInsets.only(left:50, right: 50),
+                              padding: EdgeInsets.only(left:30, right: 30),
                               child: TextFormField(
+                                initialValue: ScheduleFormParam.scheduleName,
                                 decoration: textInputDecoration.copyWith(hintText: 'schedule name'),
                                 validator: (val) => val.isEmpty ? 'schedule name' : null,
                                 onChanged: (val) {
@@ -93,18 +105,19 @@ class _ScheduleFormState extends State<ScheduleForm> {
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.only(left:50, right: 50, bottom: 8, top:40),
+                              padding: EdgeInsets.only(left:30, right: 30, bottom: 8, top:40),
                               alignment: Alignment.centerLeft,
                               child: Text("Start Time:", style: TextStyle(fontSize:16)),
                             ),
                             Row(
                               children: [
                                 // Text("hi"),
-                                SizedBox(width:50),
+                                SizedBox(width:30),
                                 Container(
                                   width:58,
                                   // height: 100,
                                   child: TextFormField(
+                                    initialValue: ScheduleFormParam.startTimeHour,
                                     decoration: textInputDecoration.copyWith(hintText: 'hr'),
                                     validator: (val) => val.isEmpty ? 'hr' : null,
                                     onChanged: (val) {
@@ -119,6 +132,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   width:58,
                                   // height: 100,
                                   child: TextFormField(
+                                    initialValue: ScheduleFormParam.startTimeMinute,
                                     decoration: textInputDecoration.copyWith(hintText: 'min'),
                                     validator: (val) => val.isEmpty ? 'min' : null,
                                     onChanged: (val) {
@@ -127,65 +141,64 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   ),
                                 ),
                                 SizedBox(width:20),
-                                ToggleSwitch(
-                                  minWidth: 50,
-                                  minHeight: 40,
-                                  fontSize: 16.0,
-                                  initialLabelIndex: 1,
-                                  activeBgColor: sprinklerBlue,
-                                  activeFgColor: whiteFontColor,
-                                  inactiveBgColor: whiteFontColor,
-                                  inactiveFgColor: Colors.grey[900],
-                                  labels: ['AM', 'PM'],
-                                  onToggle: (index) {
-                                    // print('switched to: $index');
+                                // ToggleSwitch(
+                                //   minWidth: 50,
+                                //   minHeight: 40,
+                                //   fontSize: 16.0,
+                                //   initialLabelIndex: 0,
+                                //   activeBgColor: sprinklerBlue,
+                                //   activeFgColor: whiteFontColor,
+                                //   inactiveBgColor: whiteFontColor,
+                                //   inactiveFgColor: Colors.grey[900],
+                                //   labels: ['AM', 'PM'],
+                                //   onToggle: (index) {
+                                //     // print('switched to: $index');
+                                //   },
+                                // )
+
+                                ToggleButtons(
+                                  children: <Widget>[
+                                    Text("AM"),
+                                    Text("PM"),
+                                    // Icon(Icons.cake),
+                                  ],
+                                  onPressed: (int index) {
+                                    setState(() {
+                                      for (int buttonIndex = 0; buttonIndex < ScheduleFormParam.amPm.length; buttonIndex++) {
+                                        if (buttonIndex == index) {
+                                          ScheduleFormParam.amPm[buttonIndex] = true;
+                                        } else {
+                                          ScheduleFormParam.amPm[buttonIndex] = false;
+                                        }
+                                      }
+                                    });
                                   },
-                                )
+                                  isSelected: ScheduleFormParam.amPm,
+                                ),
                               ]
                             ),
 
 
                             Container(
-                              padding: EdgeInsets.only(left:50, right: 50, bottom: 8, top:40),
+                              padding: EdgeInsets.only(left:30, right: 30, bottom: 8, top:40),
                               alignment: Alignment.centerLeft,
                               child: Text("Included Zones:", style: TextStyle(fontSize:16)),
                             ),
                             Container(
                               // color: sprinklerBlue,
-                              padding: EdgeInsets.only(left:50,right:50),
-                              child: Column(
-                                children: [
-                                  
-                                  for (var i = 0; i < 5; i += 1)
-                                    Row(
-                                      children: [
-                                        Checkbox(
-                                          onChanged: (bool value) {
-                                            setState(() {
-                                              ScheduleFormParam.selectedZones[i] = value;
-                                            });
-                                          },
-                                          value: ScheduleFormParam.selectedZones[i],
-                                          activeColor: sprinklerBlue,
-                                        ),
-                                        Text(
-                                          'Zone ${i + 1}',
-                                          style: basicBlack,
-                                        ),
-                                      ],
-                                      // mainAxisAlignment: MainAxisAlignment.center,
-                                    ),
-                                ],
-                              ),
+                              padding: EdgeInsets.only(left:30,right:30),
+                              child: zoneSelection(setState, devicesNotifier, context),
                             ),
+
+                            
                             Container(
-                              padding: EdgeInsets.only(left:50, right: 50, bottom: 8, top:40),
+                              padding: EdgeInsets.only(left:30, right: 30, bottom: 8, top:40),
                               alignment: Alignment.centerLeft,
                               child: Text("Occurence:", style: TextStyle(fontSize:16)),
                             ),
                             Container(
                               // color: sprinklerBlue,
-                              padding: EdgeInsets.only(left:50,right:50),
+                              padding: EdgeInsets.only(left:30,right:30),
                               child: Column(
                                 children: [
                                   
@@ -210,25 +223,32 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 20.0),
-                            
-                            SizedBox(height: 27.0),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Text("Need an account, ", style: basicBlack,),
-                            //     InkWell(
-                            //       child: Text("Sign Up", style: basicBlue,),
-                            //       onTap: () => widget.toggleView(),
-                            //     ),
-                            //     Text("!", style: basicBlack,)
-                            //   ],
-                            // ),
+                            SizedBox(height: 50.0),
+                                                        
+                            scheduleFormError(),
+
                             Material(
                               color: Colors.transparent,
                               child: InkWell(
+                                onTap: ((){
+                                  if(validateSchedule() == true){
+                                    submitForm(context);
+                                    ScheduleFormParam.selectedOccurence = null;
+                                    ScheduleFormParam.startTimeMinute = null;
+                                    ScheduleFormParam.startTimeHour = null;
+                                    ScheduleFormParam.scheduleName = null;
+                                    ScheduleFormParam.selectedZones = [];
+                                    ScheduleFormParam.amPm = [true, false];
+                                    Navigator.pop(context,);
+                                  }
+                                  else{
+                                    setState(() {
+                                      ScheduleFormParam.errorMessage = validateSchedule();
+                                    });
+                                  }
+                                }),
                                 child: Container(
-                                  margin: EdgeInsets.only(left:50, right:50,),
+                                  margin: EdgeInsets.only(left:30, right:30,),
                                   padding: EdgeInsets.only(top: 15, bottom: 15),
                                   width: MediaQuery.of(context).size.width,
                                   alignment: Alignment.center,

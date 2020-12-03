@@ -46,7 +46,7 @@ class _RegisterState extends State<Register> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 20.0),
-              pageTitle(context, "Sign Up", false, false),
+              pageTitle(context, "Sign Up", false, false, setState),
               SizedBox(height: 20.0),
               Image(image: AssetImage('images/sprinklerImage.png'), width: 90,),
               SizedBox(height: 35.0),

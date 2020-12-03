@@ -44,7 +44,7 @@ class SettingsState extends State<SettingsPage> {
           children: [
             SizedBox(height: 40.0),
             Container(
-              child: pageTitle(context, "Settings", false, true),
+              child: pageTitle(context, "Settings", false, true, setState),
             ),
             SizedBox(height: 40.0),
             Container(

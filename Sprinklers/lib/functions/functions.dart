@@ -1,8 +1,6 @@
-// import 'package:flutter/material.dart';
 import 'package:date_format/date_format.dart';
-import 'package:Sprinklers/models/build.dart';
+import 'package:Sprinklers/models/scheduleForm.dart';
 import 'package:Sprinklers/notifier/buildNotifier.dart';
-
 
 limitString(String title, int length){
   String returnTitle;
@@ -175,4 +173,65 @@ getZoneCount(int buildId, BuildNotifier buildNotifier){
     index += 1;
   }
   return "error retreiving data";
+}
+
+
+
+validateSchedule(){
+  List returnList = [];
+  bool errors = false;
+  bool selectedZones = false;
+  if(ScheduleFormParam.scheduleName == null || ScheduleFormParam.scheduleName == ""){
+    errors = true;
+    returnList.add("Name Required");
+  }
+
+  if(ScheduleFormParam.startTimeMinute == null || ScheduleFormParam.startTimeHour == null || ScheduleFormParam.startTimeMinute == "" || ScheduleFormParam.startTimeHour == "" || int.parse(ScheduleFormParam.startTimeMinute) > 59 || int.parse(ScheduleFormParam.startTimeHour) > 12){
+    errors = true;
+    returnList.add("Invalide Start Time");
+  }
+
+  if(ScheduleFormParam.selectedOccurence == null){
+    errors = true;
+    returnList.add("Occurence Required");
+  }
+
+  for(int index = 0; index <  ScheduleFormParam.zoneNames.length; index++){
+    
+    if(ScheduleFormParam.selectedZones[index][0]){
+      selectedZones = true;
+      if(ScheduleFormParam.selectedZones[index][1] == "" || ScheduleFormParam.selectedZones[index][1] == null || ScheduleFormParam.selectedZones[index][1] == 0 || ScheduleFormParam.selectedZones[index][2] == "" || ScheduleFormParam.selectedZones[index][2] == null || ScheduleFormParam.selectedZones[index][2] == 0){
+        returnList.add("Invalid Zone Run Time");
+        errors = true;
+      }
+    }
+    // else{}
+    index++;
+  }
+  if(!selectedZones){
+    returnList.add("Need atleast 1 zone");
+    errors = true;
+  }
+
+  if(errors == true){
+    String returnString = "";
+    int index = 0;
+    if(returnList.length == 1){
+      returnString = returnList[0];
+    }
+    else{
+      for(var error in returnList){
+        if(index+1 == returnList.length){
+          returnString += error;
+        }
+        else{
+          returnString += error + ", ";
+        }
+
+        index++;
+      }
+    }
+    return returnString;
+  }
+  return true;
 }

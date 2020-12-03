@@ -45,3 +45,4 @@ TextStyle basicBlue = TextStyle(fontFamily: defaultFont, fontSize: 19, color: sp
 TextStyle basicRed = TextStyle(fontFamily: defaultFont, fontSize: 19, color: red, fontWeight: FontWeight.w400);
 TextStyle basicLargeBlack = new TextStyle(fontFamily: defaultFont, fontSize: 30, color: darkFontColor, fontWeight: FontWeight.w700);
 TextStyle basicBlackBold = new TextStyle(fontFamily: defaultFont, fontSize: 19, color: darkFontColor, fontWeight: FontWeight.w700);
+TextStyle error = TextStyle(fontFamily: defaultFont, fontSize: 19, color: red, fontWeight: FontWeight.w400, height: 1.55);

@@ -1,0 +1,7 @@
+class RunNowFormParam{
+  static String startTimeHour = '';
+  static String startTimeMinute = '';
+  static int currentValue = 1;
+  static List selectedZones = [false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false,false, false, false, false, false,false,false,false];
+
+}

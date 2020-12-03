@@ -44,7 +44,7 @@ class _AccountInfoSettingsState extends State<AccountInfoSettings> {
                 children: [
                   SizedBox(height: 40.0),
                   Container(
-                    child: pageTitle(context, "Account", false, true),
+                    child: pageTitle(context, "Account", false, true, setState),
                   ),
                   SizedBox(height: 40.0),
                   Container(

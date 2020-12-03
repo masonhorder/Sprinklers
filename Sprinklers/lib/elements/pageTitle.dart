@@ -4,7 +4,7 @@ import 'package:Sprinklers/screens/settings.dart';
 import 'package:Sprinklers/elements/runNowPopUp.dart';
 
 
-pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back){
+pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back, StateSetter setState){
   if(homePage == true){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -13,7 +13,7 @@ pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back
           icon: Icon(Icons.play_circle_filled, color: darkGrey,),
           iconSize: 36,
           onPressed: (){
-            runNowPopUp(context);
+            runNowPopUp(context, setState);
           },
         ),
         SizedBox(width: 10,),
