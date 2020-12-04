@@ -11,6 +11,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Sprinklers/functions/functions.dart';
 import 'package:Sprinklers/screens/scheduleForm.dart';
 import 'package:Sprinklers/models/home.dart';
+import 'package:Sprinklers/screens/settings.dart';
+import 'package:Sprinklers/elements/runNowPopUp.dart';
 
 
 
@@ -71,7 +73,33 @@ class _FeedState extends State<HomePage>{
                     children: [
                       SizedBox(height: 40.0),
                       Container(
-                        child: pageTitle(context, "Sprinklers", true, false, setState),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:[
+                            IconButton(
+                              icon: Icon(Icons.play_circle_filled, color: darkGrey,),
+                              iconSize: 36,
+                              onPressed: (){
+                                runNowPopUp(context, setState,devicesNotifier);
+                              },
+                            ),
+                            SizedBox(width: 10,),
+                            Container(
+                              child: Text("Sprinklers", style: pageTitleStyle),
+                            ),
+                            SizedBox(width: 10,),
+                            IconButton(
+                              icon: Icon(Icons.settings, color: darkGrey,),
+                              iconSize: 36,
+                              onPressed: (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => SettingsPage()),
+                                );
+                              },
+                            ),
+                          ]
+                        ),
                       ),
                       SizedBox(height: 20,),
                       

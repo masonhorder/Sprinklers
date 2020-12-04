@@ -1,39 +1,12 @@
+import 'package:Sprinklers/notifier/deviceNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:Sprinklers/screens/settings.dart';
 import 'package:Sprinklers/elements/runNowPopUp.dart';
 
 
-pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back, StateSetter setState){
-  if(homePage == true){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children:[
-        IconButton(
-          icon: Icon(Icons.play_circle_filled, color: darkGrey,),
-          iconSize: 36,
-          onPressed: (){
-            runNowPopUp(context, setState);
-          },
-        ),
-        SizedBox(width: 10,),
-        Container(
-          child: Text(pageHeaderTitle, style: pageTitleStyle),
-        ),
-        SizedBox(width: 10,),
-        IconButton(
-          icon: Icon(Icons.settings, color: darkGrey,),
-          iconSize: 36,
-          onPressed: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SettingsPage()),
-            );
-          },
-        ),
-      ]
-    );
-  }else{
+pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back, StateSetter setState,){
+  // else{
     if(back == true){
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,7 +38,7 @@ pageTitle(BuildContext context, String pageHeaderTitle, bool homePage, bool back
     else{
       return Container(child: Text(pageHeaderTitle, style: pageTitleStyle),);
     }
-  }
+  // }
   
 
 }

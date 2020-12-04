@@ -187,7 +187,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                             Container(
                               // color: sprinklerBlue,
                               padding: EdgeInsets.only(left:30,right:30),
-                              child: zoneSelection(setState, devicesNotifier, context),
+                              child: zoneSelection(setState, devicesNotifier, context, false),
                             ),
 
                             

@@ -68,7 +68,7 @@ zoneRunTime(BuildContext contex, StateSetter setState, bool checked, int index){
 
 
 
-zoneSelection(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext context){
+zoneSelection(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext context, bool bottom){
   // print(devicesNotifier.devicesList);/
   // print(devicesNotifier.devicesList[0].zones);
   ScheduleFormParam.zoneNames = [];
@@ -80,6 +80,8 @@ zoneSelection(StateSetter setState, DevicesNotifier devicesNotifier, BuildContex
       ScheduleFormParam.selectedZones.add([false, 0, 0, index]);
       index++;
     }
+
+
     return Column(
       children: [
         
@@ -117,6 +119,7 @@ zoneSelection(StateSetter setState, DevicesNotifier devicesNotifier, BuildContex
       ],
     );
   }
+  
   return Loading();
 }
 
