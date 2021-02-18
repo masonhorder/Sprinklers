@@ -99,7 +99,7 @@ getSchedules(SchedulesNotifier schedulesNotifier, BuildContext context) async {
     Schedules schedule = Schedules.fromMap(document.data());
     _schedulesList.add(schedule);
   });
-  print(_schedulesList);
+  // print(_schedulesList);
 
   schedulesNotifier.scheduleList = _schedulesList;
 }
@@ -118,7 +118,7 @@ getBuilds(BuildNotifier buildNotifier, BuildContext context) async {
     Builds build = Builds.fromMap(document.data());
     _buildList.add(build);
   });
-  print(_buildList);
+  // print(_buildList);
 
   buildNotifier.buildList = _buildList;
 }

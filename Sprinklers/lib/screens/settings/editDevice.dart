@@ -38,6 +38,12 @@ class _EditDevicesSettingsState extends State<EditDevicesSettings> {
   
   @override
   Widget build(BuildContext context) {
+    int index = 0;
+    // ScheduleFormParam.scheduleName = [];
+    // for (var item in scheduleNotifier.scheduleList){
+    //   ScheduleFormParam.scheduleName.add(item);
+    //   index++;
+    // }
     // BuildNotifier buildNotifier = Provider.of<BuildNotifier>(context);
     UserID user = Provider.of<UserID>(context);
     return StreamBuilder<UserData>(

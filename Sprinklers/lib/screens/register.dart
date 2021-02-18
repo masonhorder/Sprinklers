@@ -66,6 +66,32 @@ class _RegisterState extends State<Register> {
                   setState(() => password = val);
                 },
               ),
+              SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: ((MediaQuery.of(context).size.width)/2)-55,
+                    child: TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'first name'),
+                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                      onChanged: (val) {
+                        setState(() => password = val);
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: ((MediaQuery.of(context).size.width)/2)-55,
+                    child: TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'last name'),
+                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                      onChanged: (val) {
+                        setState(() => password = val);
+                      },
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(height: 30.0),
               RaisedButton(
                 padding: EdgeInsets.all(7),

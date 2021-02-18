@@ -1,4 +1,5 @@
 import 'package:Sprinklers/notifier/deviceNotifier.dart';
+import 'package:Sprinklers/notifier/schedulesNotifier.dart';
 import 'package:Sprinklers/screens/settings.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -67,9 +68,10 @@ zoneRunTime(BuildContext contex, StateSetter setState, bool checked, int index){
 
 
 
-mainBody(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext context,){
+mainBody(StateSetter setState, BuildContext context, DevicesNotifier devicesNotifier, SchedulesNotifier schedulesNotifier,){
   if(RunNowFormParam.selectedRunType == 1){
     RunNowFormParam.zoneNames = [];
+    
     // ScheduleFormParam.selectedZones = [];
     int index = 0;
     if(devicesNotifier.devicesList[0].zones.length > 1){
@@ -133,6 +135,12 @@ mainBody(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext con
     } 
   }
   else{
+    int index = 0;
+    RunNowFormParam.scheduleNames = [];
+    for (var item in schedulesNotifier.scheduleList){
+      RunNowFormParam.scheduleNames.add(item);
+      index++;
+    }
     return Container(
       // color: sprinklerBlue,
       alignment: Alignment.centerLeft,
@@ -142,10 +150,32 @@ mainBody(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext con
         crossAxisAlignment: CrossAxisAlignment.start,
         children:[
           Text("Select Schedule:"),
+          for (var i = 0; i < RunNowFormParam.scheduleNames.length; i += 1)
           Container(
-              // color: sprinklerBlue,
-            // padding: EdgeInsets.only(left:30,right:30),
-            child: Text(""),
+            margin: EdgeInsets.only(top:3),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Radio(
+                      groupValue: RunNowFormParam.selectedSchedule ,
+                      onChanged: (var value) {
+                        setState(() {
+                          RunNowFormParam.selectedSchedule = value;
+                        });
+                      },
+                      value: i,
+                      activeColor: sprinklerBlue,
+                    ),
+                    Text(
+                      limitString(RunNowFormParam.scheduleNames[i].name,11),
+                      style: basicBlack,
+                    ),
+                  ]
+                ),                
+              ]
+            ),
           ),
         ]
       ),
@@ -156,7 +186,7 @@ mainBody(StateSetter setState, DevicesNotifier devicesNotifier, BuildContext con
 
 
 
-runNowPopUp(BuildContext context, StateSetter setState, DevicesNotifier devicesNotifier){
+runNowPopUp(BuildContext context, StateSetter setState, DevicesNotifier devicesNotifier, SchedulesNotifier schedulesNotifier){
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   return showDialog(
     context: context,
@@ -206,7 +236,7 @@ runNowPopUp(BuildContext context, StateSetter setState, DevicesNotifier devicesN
                   ),
                   SizedBox(height:17),
 
-                  mainBody(setState, devicesNotifier, context,),
+                  mainBody(setState, context, devicesNotifier, schedulesNotifier,),
                 ],
               ),
             );

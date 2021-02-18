@@ -1,5 +1,6 @@
 import 'package:Sprinklers/models/scheduleForm.dart';
 import 'package:Sprinklers/notifier/deviceNotifier.dart';
+import 'package:Sprinklers/notifier/schedulesNotifier.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,8 @@ class _FeedState extends State<HomePage>{
   void initState() {
     DevicesNotifier devicesNotifier = Provider.of<DevicesNotifier>(context, listen: false);
     getDevices(devicesNotifier,context);
+    SchedulesNotifier schedulesNotifier = Provider.of<SchedulesNotifier>(context, listen: false);
+    getSchedules(schedulesNotifier,context);
     super.initState();
   }
 
@@ -49,6 +52,8 @@ class _FeedState extends State<HomePage>{
     UserID user = Provider.of<UserID>(context);
     DevicesNotifier devicesNotifier = Provider.of<DevicesNotifier>(context);
     getDevices(devicesNotifier,context);
+    SchedulesNotifier schedulesNotifier = Provider.of<SchedulesNotifier>(context, listen: false);
+    getSchedules(schedulesNotifier,context);
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -76,28 +81,37 @@ class _FeedState extends State<HomePage>{
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children:[
-                            IconButton(
-                              icon: Icon(Icons.play_circle_filled, color: darkGrey,),
-                              iconSize: 36,
-                              onPressed: (){
-                                runNowPopUp(context, setState,devicesNotifier);
-                              },
+                            Row(
+                              children:[
+                                SizedBox(width: 23,),
+                                Container(
+                                  child: Text("Smart Spray", style: pageTitleStyle),
+                                ),
+                              ]
                             ),
-                            SizedBox(width: 10,),
-                            Container(
-                              child: Text("Sprinklers", style: pageTitleStyle),
+                            // SizedBox(width: 10,),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.play_circle_filled, color: darkGrey,),
+                                  iconSize: 36,
+                                  onPressed: (){
+                                    runNowPopUp(context, setState,devicesNotifier, schedulesNotifier);
+                                  },
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.settings, color: darkGrey,),
+                                  iconSize: 36,
+                                  onPressed: (){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => SettingsPage()),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                            SizedBox(width: 10,),
-                            IconButton(
-                              icon: Icon(Icons.settings, color: darkGrey,),
-                              iconSize: 36,
-                              onPressed: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => SettingsPage()),
-                                );
-                              },
-                            ),
+
                           ]
                         ),
                       ),
