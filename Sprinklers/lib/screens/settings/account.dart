@@ -1,3 +1,4 @@
+import 'package:Sprinklers/screens/settings/editAccount.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
 import 'package:flutter/material.dart';
@@ -31,37 +32,57 @@ class _AccountInfoSettingsState extends State<AccountInfoSettings> {
   @override
   Widget build(BuildContext context) {
     UserID user = Provider.of<UserID>(context);
-    return StreamBuilder<UserData>(
-      stream: DatabaseService(uid: user.uid).userData,
-      builder: (context, snapshot) {
-        if(snapshot.hasData){
-          UserData userData = snapshot.data;
-          return Scaffold(
-            body: Container(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(height: 40.0),
-                  Container(
-                    child: pageTitle(context, "Account", false, true, setState),
-                  ),
-                  SizedBox(height: 40.0),
-                  Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("Name: " + userData.firstName + " " + userData.lastName, style: basicBlack,),
-                      ],
+    return Scaffold(
+      body: StreamBuilder<UserData>(
+        stream: DatabaseService(uid: user.uid).userData,
+        builder: (context, snapshot) {
+          if(snapshot.hasData){
+            UserData userData = snapshot.data;
+            return Scaffold(
+              body: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 40.0),
+                    Container(
+                      child: pageTitle(context, "Account", false, true, setState),
+                    ),
+                    SizedBox(height: 40.0),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Name: " + userData.firstName + " " + userData.lastName, style: basicBlack,),
+                        ],
+                      )
+                    ),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Email: " + userData.email, style: basicBlack,),
+                        ],
+                      )
                     )
-                  )
 
-                ]
-              ),
-            )
+                  ]
+                ),
+              )
+            );
+          }return Loading();
+        }
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EditAccountInfoSettings()),
           );
-        }return Loading();
-      }
+        },
+        child: Icon(Icons.edit),
+        backgroundColor: sprinklerBlue,
+      ),
     );      
   }
 }

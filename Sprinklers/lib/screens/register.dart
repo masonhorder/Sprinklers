@@ -1,3 +1,4 @@
+import 'package:Sprinklers/models/registerForm.dart';
 import 'package:Sprinklers/services/auth.dart';
 import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
@@ -28,6 +29,10 @@ class _RegisterState extends State<Register> {
   // text field state
   String email = '';
   String password = '';
+  String comfirmPassword = '';
+  String firstName = '';
+  String lastName = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +63,32 @@ class _RegisterState extends State<Register> {
                 },
               ),
               SizedBox(height: 20.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: ((MediaQuery.of(context).size.width)/2)-55,
+                    child: TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'first name'),
+                      validator: (val) => val.length < 1 ? 'Enter a first name' : null,
+                      onChanged: (val) {
+                        setState(() => RegisterForm.firstName = val);
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: ((MediaQuery.of(context).size.width)/2)-55,
+                    child: TextFormField(
+                      decoration: textInputDecoration.copyWith(hintText: 'last name'),
+                      validator: (val) => val.length < 1 ? 'Enter a last name' : null,
+                      onChanged: (val) {
+                        setState(() => RegisterForm.lastName = val);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.0),
               TextFormField(
                 decoration: textInputDecoration.copyWith(hintText: 'password'),
                 obscureText: true,
@@ -67,30 +98,13 @@ class _RegisterState extends State<Register> {
                 },
               ),
               SizedBox(height: 20.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    width: ((MediaQuery.of(context).size.width)/2)-55,
-                    child: TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: 'first name'),
-                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: ((MediaQuery.of(context).size.width)/2)-55,
-                    child: TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: 'last name'),
-                      validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
-                      onChanged: (val) {
-                        setState(() => password = val);
-                      },
-                    ),
-                  ),
-                ],
+              TextFormField(
+                decoration: textInputDecoration.copyWith(hintText: 'comfirm password'),
+                obscureText: true,
+                validator: (val) => val != password ? 'Enter the same password' : null,
+                onChanged: (val) {
+                  setState(() => comfirmPassword = val);
+                },
               ),
               SizedBox(height: 30.0),
               RaisedButton(
@@ -110,6 +124,9 @@ class _RegisterState extends State<Register> {
                         error = 'Please supply a valid email';
                       });
                     }
+                    // else{
+                    //   print("hi");
+                    // }
                   }
                 }
               ),
