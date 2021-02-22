@@ -61,41 +61,27 @@ class AuthService {
   Future deleteAcount(BuildContext context) async{
     try {
       await FirebaseAuth.instance.currentUser.delete();
-      await _auth.signOut();             
-
-    } catch(e) {
-      if (e.code == 'requires-recent-login') {
-        return showDialog(
-          context: context,
-          barrierDismissible: false, 
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text('Sign Out Needed'),
-              content: StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
-                  Text("Please Sign Out and Resign In to continue your account deletion");
-                }
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                ),
-                TextButton(
-                  child: Text('Sign OUt'),
-                  onPressed: () async {
-                    await _auth.signOut();
-                  },
-                ),
-                
-              ],
-            );
-          },
-        );
-      } 
+    } on FirebaseAuthException catch (e) {
     }
+  }
+
+  Future reauth(String email, String password) async{
+    // Create a credential
+    EmailAuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+
+    // Reauthenticate
+    await FirebaseAuth.instance.currentUser.reauthenticateWithCredential(credential);
+  }
+
+  Future updatePassword(String password) async {
+    await FirebaseAuth.instance.currentUser.updatePassword(password);
+  }
+  Future updateEmail(String newEmail) async {
+    await FirebaseAuth.instance.currentUser.updateEmail(newEmail);
+  }
+
+  Future forgotPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
   }
 
 }

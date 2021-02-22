@@ -1,8 +1,10 @@
 import 'package:Sprinklers/models/editForm.dart';
+import 'package:Sprinklers/screens/wrapper.dart';
 import 'package:Sprinklers/services/auth.dart';
 import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
 import 'package:Sprinklers/style/style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Sprinklers/elements/pageTitle.dart';
 // import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +34,13 @@ class _EditAccountInfoSettingsState extends State<EditAccountInfoSettings> {
   String initialEmail = '';
   String initialFirstName = '';
   String initialLastName = '';
+  String password = '';
+  String newPassword = '';
+  String comfirmPassword = '';
+  final _formKey = GlobalKey<FormState>();
+  String error = '';
+  bool loading = false;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +54,9 @@ class _EditAccountInfoSettingsState extends State<EditAccountInfoSettings> {
             initialEmail = userData.email;
             initialFirstName = userData.firstName;
             initialLastName = userData.lastName;
+            if(initialEmail != FirebaseAuth.instance.currentUser.email){
+              DatabaseService(uid: user.uid).updateUserData(initialFirstName, initialLastName, initialEmail);
+            }
 
             return Scaffold(
               body: Container(
@@ -108,11 +120,82 @@ class _EditAccountInfoSettingsState extends State<EditAccountInfoSettings> {
                         padding: EdgeInsets.all(11),
                         color: sprinklerBlue,
                         child: Text(
-                          'Reset Password',
+                          'Change Password',
                           style: basicWhite,
                         ),
                         onPressed: () async {
-                          
+                          return showDialog(
+                            context: context,
+                            barrierDismissible: false, 
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: backgroundColor,
+                                title: Text('Please provide the following details'),
+                                content: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return Form(
+                                      key: _formKey,
+                                      child: Container(
+                                        height: 250,
+                                        child: Column(
+                                          children: [
+                                            TextFormField(
+                                              decoration: textInputDecoration.copyWith(hintText: 'old password'),
+                                              obscureText: true,
+                                              validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                                              onChanged: (val) {
+                                                setState(() => password = val);
+                                              },
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            TextFormField(
+                                              decoration: textInputDecoration.copyWith(hintText: 'new password'),
+                                              obscureText: true,
+                                              validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                                              onChanged: (val) {
+                                                setState(() => newPassword = val);
+                                              },
+                                            ),
+                                            SizedBox(height: 20.0),
+                                            TextFormField(
+                                              decoration: textInputDecoration.copyWith(hintText: 'comfirm new password'),
+                                              obscureText: true,
+                                              validator: (val) => val != newPassword ? 'Enter the same password' : null,
+                                              onChanged: (val) {
+                                                setState(() => comfirmPassword = val);
+                                              },
+                                            ),
+                                          ]
+                                        )
+                                      )
+                                    );
+                                  }
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('Update Password', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
+                                    onPressed: () async {
+                                      if(_formKey.currentState.validate()){
+                                        setState(() => loading = true);
+                                        
+                                        await AuthService().reauth(userData.email, password);
+                                        await AuthService().updatePassword(newPassword);
+                                        Navigator.pop(context);
+                                      }
+                                      setState(() => loading = false);
+                                    },
+                                  ),
+                                  
+                                ],
+                              );
+                            },
+                          );
                         }
                       )
                     ),
@@ -127,7 +210,52 @@ class _EditAccountInfoSettingsState extends State<EditAccountInfoSettings> {
                           style: basicWhite,
                         ),
                         onPressed: () async {
-                          String returned = await AuthService().deleteAcount(context);
+                          
+                          return showDialog(
+                            context: context,
+                            barrierDismissible: false, 
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                backgroundColor: backgroundColor,
+                                title: Text('Please enter your password to continue'),
+                                content: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return Container(
+                                      child: TextFormField(
+                                        decoration: textInputDecoration.copyWith(hintText: 'password'),
+                                        obscureText: true,
+                                        validator: (val) => val.length < 6 ? 'Enter a password 6+ chars long' : null,
+                                        onChanged: (val) {
+                                          setState(() => password = val);
+                                        },
+                                      ),
+                                    );
+                                  }
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('Cancel'),
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('DELETE ACCOUNT', style: TextStyle(color: Colors.red, fontWeight: FontWeight.w600)),
+                                    onPressed: () async {
+                                      await AuthService().reauth(userData.email, password);
+                                      await AuthService().deleteAcount(context);
+                                      Navigator.pop(context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => Wrapper()),
+                                      );
+                                    },
+                                  ),
+                                  
+                                ],
+                              );
+                            },
+                          );
                         }
                       )
                     ),
@@ -141,7 +269,10 @@ class _EditAccountInfoSettingsState extends State<EditAccountInfoSettings> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await DatabaseService(uid: user.uid).updateUserData(EditForm.firstName == null ? initialFirstName : EditForm.firstName, EditForm.lastName == null ? initialLastName : EditForm.lastName, EditForm.email == null ? initialEmail : EditForm.email);
+          if(initialEmail != EditForm.email && EditForm.email != null){
+            await AuthService().updateEmail(EditForm.email);
+          }
+          await DatabaseService(uid: user.uid).updateUserData(EditForm.firstName == null ? initialFirstName : EditForm.firstName, EditForm.lastName == null ? initialLastName : EditForm.lastName, EditForm.email == null ? initialEmail : EditForm.email,);
           Navigator.pop(context,);
         },
         child: Icon(Icons.save_rounded),

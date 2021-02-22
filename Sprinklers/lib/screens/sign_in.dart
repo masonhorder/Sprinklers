@@ -1,3 +1,4 @@
+import 'package:Sprinklers/screens/forgotPassword.dart';
 import 'package:Sprinklers/services/auth.dart';
 import 'package:Sprinklers/shared/constants.dart';
 import 'package:Sprinklers/shared/loading.dart';
@@ -105,6 +106,21 @@ class _SignInState extends State<SignIn> {
                       onTap: () => widget.toggleView(),
                     ),
                     Text("!", style: basicBlack,)
+                  ],
+                ),
+                SizedBox(height: 12.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    InkWell(
+                      child: Text("Forgot Password?", style: basicBlue,),
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ForgotPassword()),
+                        );
+                      },
+                    ),
                   ],
                 ),
                 SizedBox(height: 12.0),

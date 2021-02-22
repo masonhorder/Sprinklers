@@ -162,8 +162,30 @@ class SettingsState extends State<SettingsPage> {
                           )
                         )
                       ),
+                      SizedBox(height:50),
+                      InkWell(
+                        // onTap: () async{
+                        //   await _auth.signOut();
+                        //   Navigator.pop(context);
+                        // },
+                        child: Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border(
+                              top: BorderSide(color: lightGrey, width: 1,),
+                              bottom: BorderSide(color: lightGrey, width: 1,),
 
-                      SizedBox(height:100),
+                            ),
+                          ),
+                          width: MediaQuery.of(context).size.width,
+                          child:Center(
+                            child: Text("Upgrade to Pro", style: basicBlue,),
+                          )
+                        )
+                      ),
+                      SizedBox(height:50),
+
 
                       // logout
                       InkWell(

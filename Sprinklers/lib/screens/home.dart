@@ -14,6 +14,8 @@ import 'package:Sprinklers/screens/scheduleForm.dart';
 import 'package:Sprinklers/models/home.dart';
 import 'package:Sprinklers/screens/settings.dart';
 import 'package:Sprinklers/elements/runNowPopUp.dart';
+import 'package:Sprinklers/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 
@@ -54,6 +56,7 @@ class _FeedState extends State<HomePage>{
     getDevices(devicesNotifier,context);
     SchedulesNotifier schedulesNotifier = Provider.of<SchedulesNotifier>(context, listen: false);
     getSchedules(schedulesNotifier,context);
+    
 
     return StreamBuilder<UserData>(
       stream: DatabaseService(uid: user.uid).userData,
@@ -62,6 +65,9 @@ class _FeedState extends State<HomePage>{
         if(snapshot.hasData){
 
           UserData userData = snapshot.data;
+          // if (!FirebaseAuth.instance.currentUser.emailVerified) {
+          //   FirebaseAuth.instance.currentUser.sendEmailVerification();
+          // }
 
           return MaterialApp(
             debugShowCheckedModeBanner: false,
